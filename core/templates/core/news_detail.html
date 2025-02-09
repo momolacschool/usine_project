@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ news_item.title }}{% endblock %}
+
+{% block content %}
+<section class="max-w-3xl mx-auto my-10 p-6 bg-white shadow-md rounded-md">
+    <article>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
+            {{ news_item.title }}
+        </h1>
+        <p class="text-gray-500 text-sm text-center mb-6">
+            Publié le {{ news_item.published_at }}
+        </p>
+
+        {% if news_item.image %}
+            <div class="flex justify-center mb-6">
+                <img src="{{ news_item.image.url }}" alt="{{ news_item.title }}" class="w-full md:w-3/4 lg:w-2/3 h-auto rounded-md shadow">
+            </div>
+        {% endif %}
+
+        <div class="text-gray-700 leading-relaxed text-justify px-4">
+            {{ news_item.content|safe }}
+        </div>
+    </article>
+
+    <div class="mt-8 text-center">
+        <a href="{% url 'news_list' %}" class="text-blue-600 font-medium hover:underline">
+            ← Retour aux actualités
+        </a>
+    </div>
+</section>
+{% endblock %}

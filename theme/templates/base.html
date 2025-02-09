@@ -1,0 +1,98 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}UAC{% endblock %}</title>
+    {% tailwind_css %}
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .nav-item:hover {
+            color: #FFD700;
+            transition: color 0.3s ease-in-out;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <header class="bg-gray-800 shadow-md fixed top-0 left-0 w-full z-20">
+        <div class="container mx-auto flex justify-between items-center p-4 text-gray-200">
+            <a href="{% url 'home' %}" class="text-2xl font-bold text-cyan-400">UAC</a>
+
+            <!-- Menu pour Mobile -->
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                ☰ Menu
+            </button>
+
+            <!-- Menu Navigation -->
+            <nav class="hidden md:flex space-x-6 font-medium">
+                <ul class="flex space-x-6">
+                    <li><a href="{% url 'home' %}" class="nav-item {% if request.path == '/' %}text-yellow-400 font-bold{% endif %}">Accueil</a></li>
+                    <li><a href="{% url 'about' %}" class="nav-item {% if request.path == '/about/' %}text-yellow-400 font-bold{% endif %}">Qui sommes-nous ?</a></li>
+                    <li class="relative dropdown">
+                        <a href="#" class="nav-item">Ressources</a>
+                        <ul class="dropdown-menu absolute hidden bg-gray-700 mt-2 rounded-md shadow-lg p-2">
+                            <li><a href="{% url 'media_list' %}" class="block px-4 py-2 hover:bg-gray-600">Médiathèque</a></li>
+                            <li><a href="{% url 'document_list' %}" class="block px-4 py-2 hover:bg-gray-600">Documents</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'news_list' %}" class="nav-item">Actualités</a></li>
+                    <li><a href="{% url 'products' %}" class="nav-item {% if request.path == '/products/' %}text-yellow-400 font-bold{% endif %}">Produits</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-item {% if request.path == '/contact/' %}text-yellow-400 font-bold{% endif %}">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden bg-gray-900 p-4 md:hidden">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="{% url 'home' %}" class="nav-item block text-white">Accueil</a></li>
+                <li><a href="{% url 'about' %}" class="nav-item block text-white">Qui sommes-nous ?</a></li>
+                <li><a href="{% url 'media_list' %}" class="nav-item block text-white">Médiathèque</a></li>
+                <li><a href="{% url 'document_list' %}" class="nav-item block text-white">Documents</a></li>
+                <li><a href="{% url 'news_list' %}" class="nav-item block text-white">Actualités</a></li>
+                <li><a href="{% url 'products' %}" class="nav-item block text-white">Produits</a></li>
+                <li><a href="{% url 'contact' %}" class="nav-item block text-white">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20 container mx-auto px-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center p-4 mt-10">
+        <p>&copy; 2025 UAC. Tous droits réservés.
+            <a href="{% url 'legal_mentions' %}" class="underline text-cyan-400 hover:text-yellow-300">Mentions légales</a>
+        </p>
+    </footer>
+
+    <!-- Script pour le menu mobile et dropdowns -->
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function () {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Gérer les dropdowns au clic
+        document.querySelectorAll('.dropdown').forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', function () {
+                this.querySelector('.dropdown-menu').classList.remove('hidden');
+            });
+            dropdown.addEventListener('mouseleave', function () {
+                this.querySelector('.dropdown-menu').classList.add('hidden');
+            });
+        });
+    </script>
+
+</body>
+</html>

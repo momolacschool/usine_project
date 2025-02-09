@@ -1,0 +1,306 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Accueil - UAC{% endblock %}
+
+{% block content %}
+    <!-- Bande défilante (Slider) -->
+    <section class="relative overflow-hidden">
+        <div class="carousel relative w-full h-96">
+            {% for banner in banners %}
+            <div class="slide absolute inset-0 {% if forloop.first %}opacity-100{% else %}opacity-0{% endif %} transition-opacity duration-1000 ease-in-out">
+                {% if banner.image %}
+                    <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="w-full h-96 object-cover">
+                {% else %}
+                    <img src="{% static 'images/default.jpg' %}" alt="Image non disponible" class="w-full h-96 object-cover">
+                {% endif %}
+                <a href="{{ banner.link }}" class="absolute bottom-10 left-10 bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition">En savoir plus</a>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Boutons de navigation -->
+        <button id="prevSlide" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">&larr;</button>
+        <button id="nextSlide" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">&rarr;</button>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let slides = document.querySelectorAll(".slide");
+            let currentSlide = 0;
+            const intervalTime = 5000; // 5 secondes
+            let slideInterval;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle("opacity-100", i === index);
+                    slide.classList.toggle("opacity-0", i !== index);
+                });
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            function prevSlide() {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(currentSlide);
+            }
+
+            document.getElementById("nextSlide").addEventListener("click", () => {
+                nextSlide();
+                resetInterval();
+            });
+
+            document.getElementById("prevSlide").addEventListener("click", () => {
+                prevSlide();
+                resetInterval();
+            });
+
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, intervalTime);
+            }
+
+            slideInterval = setInterval(nextSlide, intervalTime);
+        });
+    </script>
+
+    <!-- Message du PDG -->
+<!-- Message du PDG -->
+<section class="container mx-auto my-10 p-8 bg-white shadow-lg rounded-lg">
+    <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-6">Mot du PDG</h2>
+
+    <div class="flex flex-col md:flex-row items-center">
+        <img src="{% static 'images/ceo.jpg' %}" alt="PDG"
+             class="w-48 h-48 rounded-full mx-auto md:mx-0 md:mr-8 object-cover shadow-lg border-4 border-yellow-500">
+
+        <div class="text-gray-700 text-lg leading-relaxed space-y-4">
+            <p>
+                C’est avec un réel plaisir que l'<strong class="text-yellow-600">Industrie Oléagineuse DIARRA-SARL (IOD-SARL)</strong>
+                vous accueille sur son site web, un portail dynamique et une interface privilégiée pour le public.
+            </p>
+
+            <p>
+                Internet étant devenu un outil incontournable de communication,
+                nous nous engageons à partager des informations en <span class="font-semibold text-gray-900">temps réel</span> et à donner une visibilité accrue à nos activités.
+            </p>
+
+            <p>
+                Après la création de <strong class="text-yellow-600">Société Diarra Négoce (SDN)</strong> en 2016,
+                spécialisée dans la production et la vente de l'huile <span class="uppercase font-bold">CULINOR</span> et du tourteau de coton,
+                nous avons le plaisir de lancer notre nouvelle unité de production d’aliments complets pour <span class="font-semibold">bétail, volaille et poisson</span> sous la marque <span class="text-yellow-600 font-bold">« Bu Duman »</span>.
+            </p>
+
+            <p>
+                Cette initiative vise à <span class="font-semibold text-gray-900">développer l’élevage animal, réduire l’importation d’aliments, pallier la pénurie et créer de l’emploi</span> pour notre pays.
+            </p>
+
+            <p>
+                Nous sommes une équipe impliquée, à l'écoute de nos clients et engagée pour un service d’excellence.
+                Vos propositions et suggestions sont toujours les bienvenues pour améliorer notre plateforme.
+            </p>
+
+            <p class="italic text-gray-900 font-medium text-lg text-center md:text-left">
+                Excellente navigation à tous !
+            </p>
+        </div>
+    </div>
+</section>
+
+    <!-- Présentation des Groupes -->
+<!-- Présentation de l'Entreprise -->
+<!-- Présentation de l'Entreprise -->
+<section class="container mx-auto my-10">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Notre Entreprise</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <!-- Texte à gauche -->
+        <div class="text-gray-700 text-lg leading-relaxed space-y-4">
+            <p>
+                <strong class="text-yellow-600">L’Industrie oléagineuse DIARRA- SARL</strong> est une société à responsabilité limitée créée en 2016
+                avec un capital d’un million de francs CFA réparti en 100 parts pour Monsieur SEKOU DIARRA.
+            </p>
+
+            <p>
+                La société commence avec la production de produits finis comme l’huile de marque
+                <span class="uppercase font-bold">« CULINOR »</span> et le tourteau de coton, dont la demande est importante au Mali et dans les pays voisins.
+            </p>
+
+            <p>
+                La diversification des activités du promoteur a conduit à la création d’une unité de production d’aliments pour bétail et volaille,
+                appelée <strong class="text-yellow-600">Usine d’Aliments Complets (UAC)</strong>, sous la marque <span class="font-bold">« Bu Duman »</span>.
+            </p>
+
+            <p class="font-medium text-gray-900">Les objectifs de cette nouvelle usine sont :</p>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Renforcer le secteur privé.</li>
+                <li>Développer les ressources animales.</li>
+                <li>Fournir une alimentation riche autre que les fourrages industriels.</li>
+                <li>Augmenter la productivité du cheptel national.</li>
+                <li>Améliorer la quantité et la qualité des aliments pour bétail.</li>
+                <li>Promouvoir les filières d’alimentation bétail, volaille, huile et poisson.</li>
+                <li>Créer des emplois et de la valeur ajoutée.</li>
+            </ul>
+        </div>
+
+        <!-- Image à droite (plein espace) -->
+        <div class="w-full h-full">
+            <img src="{% static 'images/usine.jpg' %}" alt="Notre Entreprise"
+                 class="w-full h-full object-cover rounded-md shadow-lg min-h-[400px]">
+        </div>
+    </div>
+</section>
+
+
+    <!-- Section Produits -->
+<!-- Section Produits -->
+<section class="container mx-auto my-10">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Nos Produits</h2>
+
+    <div class="relative overflow-hidden">
+        <!-- Bouton Previous -->
+        <button id="prevProduct" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-gray-700 z-10">
+            &larr;
+        </button>
+
+        <!-- Carrousel Produits -->
+        <div class="overflow-hidden">
+            <div id="productCarousel" class="flex space-x-6 transition-transform duration-500 ease-in-out">
+                {% for product in products_sdn %}
+                <a href="{% url 'product_detail' product.pk %}" class="min-w-[200px] md:min-w-[250px] lg:min-w-[300px] bg-white p-4 shadow-md rounded-md hover:scale-105 transition-transform duration-300">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded-md">
+                    {% else %}
+                        <img src="{% static 'images/default.jpg' %}" alt="Image non disponible" class="w-full h-48 object-cover rounded-md">
+                    {% endif %}
+                    <h4 class="text-lg font-semibold mt-2 text-center text-gray-800">{{ product.name }}</h4>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Bouton Next -->
+        <button id="nextProduct" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full shadow-md hover:bg-gray-700 z-10">
+            &rarr;
+        </button>
+    </div>
+</section>
+
+<!-- JavaScript pour le Carrousel -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.getElementById("productCarousel");
+        const nextBtn = document.getElementById("nextProduct");
+        const prevBtn = document.getElementById("prevProduct");
+
+        let scrollAmount = 0;
+        const productWidth = 250 + 24; // Largeur + espacement (ajustez si nécessaire)
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+        function updateCarousel(direction) {
+            scrollAmount += direction * productWidth * 5;
+            scrollAmount = Math.max(0, Math.min(scrollAmount, maxScroll));
+            carousel.style.transform = `translateX(-${scrollAmount}px)`;
+        }
+
+        nextBtn.addEventListener("click", () => updateCarousel(1));
+        prevBtn.addEventListener("click", () => updateCarousel(-1));
+    });
+</script>
+
+
+
+    <!-- Section Membres du Staff -->
+<!-- Section Notre Équipe -->
+<section class="container mx-auto my-10 px-6">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Notre Équipe</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <!-- Carrousel à gauche -->
+        <div class="relative w-full overflow-hidden">
+            <div id="staffCarouselWrapper" class="relative w-full overflow-hidden">
+                <div id="staffCarousel" class="flex space-x-6 animate-slide">
+                    {% for staff in staff_members %}
+                    <div class="min-w-[220px] md:min-w-[250px] lg:min-w-[270px] bg-white shadow-xl rounded-md text-center p-6 transform hover:scale-110 transition duration-500">
+                        {% if staff.image %}
+                            <img src="{{ staff.image.url }}" alt="{{ staff.name }}" class="w-32 h-32 rounded-full mx-auto shadow-lg border-2 border-yellow-500">
+                        {% else %}
+                            <img src="{% static 'images/default-profile.png' %}" alt="Image non disponible" class="w-32 h-32 rounded-full mx-auto shadow-lg border-2 border-yellow-500">
+                        {% endif %}
+                        <h3 class="text-lg font-semibold mt-4 text-gray-800">{{ staff.name }}</h3>
+                        <p class="text-gray-600">{{ staff.position }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Texte à droite -->
+        <div class="bg-white p-6 rounded-lg shadow-lg backdrop-blur-md">
+            <p class="flex items-start space-x-3">
+                <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 10l6 6L18 4"></path>
+                </svg>
+                <span>
+                    <strong>Avec une équipe qualifiée et expérimentée</strong>, les produits
+                    <span class="text-yellow-600 font-semibold">Bu Duman</span> suivent un processus strict respectant les
+                    normes industrielles, de l'arrivée des matières premières à l’ensachage et au stockage des produits finis.
+                </span>
+            </p>
+
+            <p class="flex items-start space-x-3 mt-4">
+                <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 10l6 6L18 4"></path>
+                </svg>
+                <span>
+                    <strong>Une équipe commerciale dynamique</strong>, toujours à l'écoute, impliquée et disponible pour
+                    offrir un service client exceptionnel.
+                </span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Style CSS pour animation fluide -->
+<style>
+    @keyframes slide {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+    .animate-slide {
+        display: flex;
+        animation: slide 40s linear infinite; /* Augmentation du temps pour ralentir */
+        width: max-content;
+    }
+
+    /* Pause au survol */
+    .animate-slide:hover {
+        animation-play-state: paused;
+    }
+</style>
+
+
+
+    <!-- Section Actualités -->
+    <section class="bg-gray-100 py-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Actualités</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {% for news in news_list %}
+                <div class="relative bg-white shadow-lg rounded-md overflow-hidden hover:shadow-xl transition duration-300">
+                    {% if news.image %}
+                        <img src="{{ news.image.url }}" alt="{{ news.title }}" class="w-full h-48 object-cover">
+                    {% else %}
+                        <img src="{% static 'images/default-news.jpg' %}" alt="Image non disponible" class="w-full h-48 object-cover">
+                    {% endif %}
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white p-4">
+                        <h4 class="font-semibold text-lg">{{ news.title }}</h4>
+                        <a href="{{ news.get_absolute_url }}" class="mt-2 bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition">En savoir plus</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

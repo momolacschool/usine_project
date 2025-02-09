@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+{% block title %}Gérer les Actualités{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold text-indigo-900">Gérer les Actualités</h1>
+{% for article in articles %}
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+        <h2 class="text-lg font-semibold">{{ article.title }}</h2>
+        <p class="text-sm text-gray-500">Publié le {{ article.published_at }}</p>
+        <a href="{% url 'edit_news' article.slug %}" class="text-blue-600 hover:underline">Modifier</a> |
+        <a href="{% url 'delete_news' article.slug %}" class="text-red-600 hover:underline">Supprimer</a>
+    </div>
+{% endfor %}
+{% endblock %}

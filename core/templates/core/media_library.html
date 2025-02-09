@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Médiathèque - UAC{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-extrabold text-indigo-900 text-center">Médiathèque</h1>
+    <p class="mt-2 text-gray-700 text-center">Découvrez nos images et vidéos en haute qualité.</p>
+
+    <!-- Barre de recherche -->
+    <div class="flex justify-center my-6">
+        <input type="text" id="search-bar" class="px-4 py-2 border rounded-lg w-1/2" placeholder="Rechercher un média...">
+    </div>
+
+    <!-- Boutons de filtrage -->
+    <div class="flex justify-center space-x-4 my-6">
+        <button class="filter-btn px-4 py-2 rounded-full bg-indigo-600 text-white" data-filter="all">Tous</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-gray-300 text-gray-800" data-filter="image">Images</button>
+        <button class="filter-btn px-4 py-2 rounded-full bg-gray-300 text-gray-800" data-filter="video">Vidéos</button>
+    </div>
+
+    <!-- Liste des médias -->
+    <div id="media-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+        {% for media_item in media %}
+            <div class="media-card bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105" data-type="{{ media_item.media_type }}" data-title="{{ media_item.title|lower }}">
+                <div class="relative group">
+                    {% if media_item.media_type == "image" %}
+                        <img src="{{ media_item.file.url }}" alt="{{ media_item.title }}" class="w-full h-56 object-cover lazy-load">
+                    {% elif media_item.media_type == "video" %}
+                        <video class="w-full h-56 object-cover lazy-load" controls>
+                            <source src="{{ media_item.file.url }}" type="video/mp4">
+                            Votre navigateur ne supporte pas la lecture vidéo.
+                        </video>
+                    {% endif %}
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
+                        <h2 class="text-white text-lg font-bold">{{ media_item.title }}</h2>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <p class="text-gray-600 text-sm">{{ media_item.description }}</p>
+                    <p class="text-xs text-gray-500 mt-2">Publié le {{ media_item.uploaded_at }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Script pour filtrer et rechercher les médias -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const mediaCards = document.querySelectorAll(".media-card");
+        const searchBar = document.getElementById("search-bar");
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                const filter = this.getAttribute("data-filter");
+                filterButtons.forEach(btn => btn.classList.replace("bg-indigo-600", "bg-gray-300"));
+                this.classList.replace("bg-gray-300", "bg-indigo-600");
+
+                mediaCards.forEach(card => {
+                    if (filter === "all" || card.getAttribute("data-type") === filter) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+            });
+        });
+
+        searchBar.addEventListener("input", function() {
+            const query = this.value.toLowerCase();
+            mediaCards.forEach(card => {
+                const title = card.getAttribute("data-title");
+                card.style.display = title.includes(query) ? "block" : "none";
+            });
+        });
+    });
+</script>
+{% endblock %}

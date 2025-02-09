@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<section class="bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Nous contacter</h2>
+        <p class="text-gray-600 text-center mb-8">Remplissez le formulaire ci-dessous ou utilisez nos informations de contact.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Formulaire de contact -->
+            <form method="post" class="space-y-4 bg-white p-6 rounded-lg shadow-md">
+                {% csrf_token %}
+                <div>
+                    <label for="name" class="block text-gray-700 font-medium">Nom</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg p-2">
+                        <span class="text-gray-500 pr-2">👤</span>
+                        <input type="text" id="name" name="name" class="w-full focus:ring focus:ring-blue-200 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium">Email</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg p-2">
+                        <span class="text-gray-500 pr-2">📧</span>
+                        <input type="email" id="email" name="email" class="w-full focus:ring focus:ring-blue-200 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-gray-700 font-medium">Téléphone</label>
+                    <div class="flex items-center border border-gray-300 rounded-lg p-2">
+                        <span class="text-gray-500 pr-2">📞</span>
+                        <input type="text" id="phone" name="phone" class="w-full focus:ring focus:ring-blue-200 outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="message" class="block text-gray-700 font-medium">Message</label>
+                    <textarea id="message" name="message" rows="4" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition">
+                    Envoyer
+                </button>
+            </form>
+
+            <!-- Informations de contact et services -->
+            <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Nos coordonnées</h3>
+                <p class="text-gray-700"><strong>📍 Adresse :</strong> Bamako, Mali</p>
+                <p class="text-gray-700"><strong>📧 Email :</strong> contact@entreprise.com</p>
+                <p class="text-gray-700"><strong>📞 Téléphone :</strong> +223 76 36 08 12 / +223 70 91 12 62</p>
+                <p class="text-gray-700 mt-4">Nous sommes disponibles du lundi au vendredi, de 9h à 18h.</p>
+
+                <!-- Section Logistique & SAV -->
+                <div class="mt-6 p-4 bg-white border-l-4 border-blue-500 rounded-md">
+                    <h4 class="text-lg font-semibold text-gray-800">📦 La Logistique</h4>
+                    <p class="text-gray-700 text-sm">
+                        Une logistique pointue pour faciliter la livraison à temps record aux clients de nos produits finis, sains et sécurisés.
+                    </p>
+                </div>
+
+                <div class="mt-4 p-4 bg-white border-l-4 border-green-500 rounded-md">
+                    <h4 class="text-lg font-semibold text-gray-800">🩺 Service Après-Vente</h4>
+                    <p class="text-gray-700 text-sm">
+                        Nous collaborons avec les meilleurs vétérinaires pour garantir une meilleure qualité de Service Après-Vente (SAV).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intégration de la Google Map -->
+        <div class="mt-10">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">📍 Localisation de l'usine</h3>
+            <div class="w-full h-64 rounded-lg overflow-hidden shadow-md">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    style="border:0"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d197241.28190343662!2d-8.147744914551117!3d12.639231985982695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe52c1c5f0a4e4a5%3A0x40e6d4a48d74e5!2sBamako%2C%20Mali!5e0!3m2!1sfr!2s!4v1707500000000">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

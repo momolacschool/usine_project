@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}À propos - Le Fichier{% endblock %}
+
+{% block content %}
+<section class="container mx-auto my-10 p-6 bg-white shadow-md rounded-md">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">Qui sommes-nous ?</h2>
+    <p class="text-gray-700 text-justify">
+        Bienvenue sur notre site officiel. Nous sommes engagés à fournir des produits de qualité exceptionnelle.
+    </p>
+</section>
+{% endblock %}

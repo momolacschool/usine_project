@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Documents Utiles{% endblock %}
+
+{% block content %}
+<section class="container mx-auto my-10 p-6 bg-white shadow-md rounded-md">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Documents Utiles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for document in documents %}
+            <div class="bg-white p-4 shadow-md rounded-md">
+                <h3 class="text-xl font-semibold mt-2">{{ document.title }}</h3>
+                <p class="text-gray-600">{{ document.description|truncatewords:20 }}</p>
+                <a href="{{ document.file.url }}" target="_blank" class="block mt-4 text-center text-white bg-blue-600 py-2 rounded-md hover:bg-blue-700">
+                    Télécharger
+                </a>
+            </div>
+        {% empty %}
+            <p class="text-center text-gray-500 col-span-3">Aucun document disponible.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
