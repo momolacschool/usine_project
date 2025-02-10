@@ -3,80 +3,72 @@
 
 {% block content %}
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-4xl font-extrabold text-indigo-900 text-center">Médiathèque</h1>
-    <p class="mt-2 text-gray-700 text-center">Découvrez nos images et vidéos en haute qualité.</p>
-
-    <!-- Barre de recherche -->
-    <div class="flex justify-center my-6">
-        <input type="text" id="search-bar" class="px-4 py-2 border rounded-lg w-1/2" placeholder="Rechercher un média...">
-    </div>
-
-    <!-- Boutons de filtrage -->
-    <div class="flex justify-center space-x-4 my-6">
-        <button class="filter-btn px-4 py-2 rounded-full bg-indigo-600 text-white" data-filter="all">Tous</button>
-        <button class="filter-btn px-4 py-2 rounded-full bg-gray-300 text-gray-800" data-filter="image">Images</button>
-        <button class="filter-btn px-4 py-2 rounded-full bg-gray-300 text-gray-800" data-filter="video">Vidéos</button>
-    </div>
+    <h1 class="text-4xl font-extrabold text-gray-800 text-center">Médiathèque</h1>
+    <p class="mt-2 text-gray-600 text-center">Découvrez nos images et vidéos.</p>
 
     <!-- Liste des médias -->
-    <div id="media-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {% for media_item in media %}
-            <div class="media-card bg-white shadow-lg rounded-lg overflow-hidden transform transition duration-300 hover:scale-105" data-type="{{ media_item.media_type }}" data-title="{{ media_item.title|lower }}">
-                <div class="relative group">
-                    {% if media_item.media_type == "image" %}
-                        <img src="{{ media_item.file.url }}" alt="{{ media_item.title }}" class="w-full h-56 object-cover">
-                    {% elif media_item.media_type == "video" %}
-                        <video class="w-full h-56 object-cover" controls preload="auto">
-                            <source src="{{ media_item.file.url }}" type="video/mp4">
-                            Votre navigateur ne supporte pas la lecture vidéo.
-                        </video>
-                    {% endif %}
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                        <h2 class="text-white text-lg font-bold">{{ media_item.title }}</h2>
+            <div
+                x-data="{ open: false }"
+                class="bg-white border-2 border-yellow-500 shadow-md rounded-lg overflow-hidden p-4 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+            >
+                <h2 class="text-lg font-semibold text-gray-800 mb-2">{{ media_item.title }}</h2>
+
+                {% if media_item.media_type == "image" %}
+                    <img src="{{ media_item.file.url }}" alt="{{ media_item.title }}" class="w-full h-auto rounded-md" @click="open = true">
+                {% elif media_item.media_type == "video" %}
+                    <video class="w-full h-auto rounded-md border border-gray-300 cursor-pointer" @click="open = true">
+                        <source src="{{ media_item.file.url }}" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture vidéo.
+                    </video>
+                {% endif %}
+
+                <p class="text-sm text-gray-400 mt-2">Publié le {{ media_item.uploaded_at }}</p>
+
+                <!-- Fenêtre pop-up -->
+                <div
+                    x-show="open"
+                    class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-90"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-90"
+                    @click.away="open = false"
+                    @keydown.window.escape="open = false"
+                >
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden max-w-3xl w-full p-6 relative">
+                        <!-- Bouton de fermeture -->
+                        <button
+                            class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold"
+                            @click="open = false; $refs.video && ($refs.video.pause());"
+                        >
+                            ×
+                        </button>
+
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ media_item.title }}</h2>
+
+                        {% if media_item.media_type == "image" %}
+                            <img src="{{ media_item.file.url }}" alt="{{ media_item.title }}" class="w-full h-auto rounded-md">
+                        {% elif media_item.media_type == "video" %}
+                            <video x-ref="video" class="w-full h-auto rounded-md border border-gray-300" controls>
+                                <source src="{{ media_item.file.url }}" type="video/mp4">
+                                Votre navigateur ne supporte pas la lecture vidéo.
+                            </video>
+                        {% endif %}
+
+                        <p class="text-gray-600 mt-4">{{ media_item.description }}</p>
+                        <p class="text-sm text-gray-400 mt-2">Publié le {{ media_item.uploaded_at }}</p>
                     </div>
-                </div>
-                <div class="p-4">
-                    <p class="text-gray-600 text-sm">{{ media_item.description }}</p>
-                    <p class="text-xs text-gray-500 mt-2">Publié le {{ media_item.uploaded_at }}</p>
                 </div>
             </div>
         {% endfor %}
     </div>
 </div>
 
-<!-- Script pour filtrer et rechercher les médias -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const filterButtons = document.querySelectorAll(".filter-btn");
-        const mediaCards = document.querySelectorAll(".media-card");
-        const searchBar = document.getElementById("search-bar");
+<!-- Inclure Alpine.js -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x/dist/cdn.min.js" defer></script>
 
-        filterButtons.forEach(button => {
-            button.addEventListener("click", function() {
-                const filter = this.getAttribute("data-filter");
-                filterButtons.forEach(btn => btn.classList.replace("bg-indigo-600", "bg-gray-300"));
-                this.classList.replace("bg-gray-300", "bg-indigo-600");
-
-                mediaCards.forEach(card => {
-                    if (filter === "all" || card.getAttribute("data-type") === filter) {
-                        card.style.display = "block";
-                    } else {
-                        card.style.display = "none";
-                    }
-                });
-            });
-        });
-
-        searchBar.addEventListener("input", function() {
-            const query = this.value.toLowerCase();
-            mediaCards.forEach(card => {
-                const title = card.getAttribute("data-title");
-                if (title) {
-                    card.style.display = title.includes(query) ? "block" : "none";
-                }
-            });
-        });
-    });
-</script>
 {% endblock %}

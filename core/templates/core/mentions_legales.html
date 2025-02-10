@@ -1,29 +1,66 @@
-{% extends "core/base.html" %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block title %}Mentions Légales{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1 class="mb-4">Mentions Légales</h1>
-    <p><strong>Éditeur du site :</strong></p>
-    <p>Nom de l'entreprise : <strong>Usine Project</strong></p>
-    <p>Adresse : 123 Rue des Industries, 75000 Paris</p>
-    <p>Téléphone : +33 1 23 45 67 89</p>
-    <p>Email : contact@usineproject.com</p>
+<div class="container mt-5 p-6 bg-white shadow-md rounded-md">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Mentions Légales</h1>
 
-    <p><strong>Directeur de publication :</strong> Jean Dupont</p>
+    <!-- Présentation de la Société -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Présentation de la Société</h2>
+        <p class="text-gray-700 mt-2">
+            <strong>Industrie Oléagineuse DIARRA - SARL</strong> est une société à responsabilité limitée créée en <strong>2016</strong>, avec un capital de <strong>1 million de francs CFA</strong>. L’unique associé, <strong>Monsieur SEKOU DIARRA</strong>, détient 100% des parts.
+        </p>
+        <p class="text-gray-700 mt-2">
+            La société a débuté par la production de produits finis tels que l'<strong>huile CULINOR</strong> et le <strong>tourteau de coton</strong>, très demandés au Mali et dans les pays voisins.
+            En vue d’une diversification de ses activités, elle a mis en place l’<strong>Usine d'Aliments Complets (UAC)</strong>, spécialisée dans la production d'<strong>aliments pour bétail et volaille</strong>, sous la marque <strong>Bu Duman</strong>.
+        </p>
+    </section>
 
-    <p><strong>Hébergement :</strong></p>
-    <p>Hébergeur : OVH</p>
-    <p>Adresse : 2 Rue Kellermann, 59100 Roubaix, France</p>
+    <!-- Hébergement -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Hébergement</h2>
+        <p class="text-gray-700 mt-2"><strong>Hébergeur :</strong> PythonAnywhere</p>
+        <p class="text-gray-700"><strong>Site web :</strong> <a href="https://www.pythonanywhere.com/" class="text-blue-600 hover:underline" target="_blank">www.pythonanywhere.com</a></p>
+        <p class="text-gray-700"><strong>Localisation des serveurs :</strong> Royaume-Uni</p>
+        <p class="text-gray-700"><strong>Support technique :</strong> Disponible via le tableau de bord PythonAnywhere</p>
+    </section>
 
-    <p><strong>Propriété intellectuelle :</strong></p>
-    <p>Le contenu de ce site (textes, images, logos) est protégé par le droit d’auteur et appartient à Usine Project.</p>
+    <!-- Informations Légales -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Informations Légales</h2>
+        <p class="text-gray-700 mt-2"><strong>Raison sociale :</strong> Industrie Oléagineuse DIARRA - SARL</p>
+        <p class="text-gray-700"><strong>Siège social :</strong> Zone Industrielle, Bamako, Mali</p>
+        <p class="text-gray-700"><strong>Capital social :</strong> 1 000 000 FCFA</p>
+        <p class="text-gray-700"><strong>Directeur de publication :</strong> Monsieur SEKOU DIARRA</p>
+        <p class="text-gray-700"><strong>Email :</strong> <a href="mailto:contact@usineproject.com" class="text-blue-600 hover:underline">contact@usineproject.com</a></p>
+    </section>
 
-    <p><strong>Cookies :</strong></p>
-    <p>Ce site utilise des cookies pour améliorer votre expérience utilisateur.</p>
+    <!-- Propriété Intellectuelle -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Propriété Intellectuelle</h2>
+        <p class="text-gray-700 mt-2">
+            Tous les contenus présents sur ce site (textes, images, logos, vidéos) sont protégés par le droit d’auteur et appartiennent à <strong>Industrie Oléagineuse DIARRA - SARL</strong>. Toute reproduction, même partielle, est interdite sans autorisation préalable.
+        </p>
+    </section>
 
-    <p><strong>Contact :</strong></p>
-    <p>Pour toute question, vous pouvez nous contacter à <a href="mailto:contact@usineproject.com">contact@usineproject.com</a>.</p>
+    <!-- Gestion des Données et Cookies -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Données Personnelles & Cookies</h2>
+        <p class="text-gray-700 mt-2">
+            Ce site utilise des cookies pour améliorer votre expérience utilisateur. Vous pouvez configurer les paramètres des cookies dans votre navigateur. Les données collectées sont strictement utilisées dans le cadre de nos services et ne sont pas partagées avec des tiers sans consentement.
+        </p>
+    </section>
+
+    <!-- Contact -->
+    <section class="mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Contact</h2>
+        <p class="text-gray-700 mt-2">
+            Pour toute question ou demande d'information, veuillez nous contacter par email à :
+            <a href="mailto:contact@usineproject.com" class="text-blue-600 hover:underline">contact@usineproject.com</a>.
+        </p>
+    </section>
 </div>
 {% endblock %}

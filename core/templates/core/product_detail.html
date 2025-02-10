@@ -1,26 +1,28 @@
 {% extends "base.html" %}
-{% load static %}  <!-- Ajouté ici -->
+{% load static %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
-<section class="container mx-auto my-10 p-6 bg-white shadow-md rounded-md">
+<section class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
     <div class="flex flex-col md:flex-row">
         {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full md:w-1/3 h-auto rounded-md">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}"
+                 class="w-full md:w-1/3 h-auto rounded-md border-2 border-yellow-500 shadow-md">
         {% else %}
-            <img src="{% static 'images/default.jpg' %}" alt="Image non disponible" class="w-full md:w-1/3 h-auto rounded-md">
+            <img src="{% static 'images/default.jpg' %}" alt="Image non disponible"
+                 class="w-full md:w-1/3 h-auto rounded-md border-2 border-yellow-500 shadow-md">
         {% endif %}
 
         <div class="md:ml-6 mt-6 md:mt-0">
             <h1 class="text-3xl font-bold text-gray-800">{{ product.name }}</h1>
             <p class="text-gray-600 mt-2">{{ product.description }}</p>
-            <p class="text-blue-600 font-bold mt-4 text-xl">{{ product.price }} CFA</p>
+            <p class="text-yellow-600 font-bold mt-4 text-xl">{{ product.price }} CFA</p>
 
             <form method="post" action="{% url 'order_create' %}" class="mt-4">
                 {% csrf_token %}
                 <input type="hidden" name="product" value="{{ product.id }}">
-                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 shadow-md font-semibold">
                     Commander
                 </button>
             </form>
@@ -28,4 +30,3 @@
     </div>
 </section>
 {% endblock %}
-

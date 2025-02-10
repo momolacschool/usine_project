@@ -66,7 +66,7 @@ def contact_view(request):
     return render(request, "core/contact.html")
 
 def legal_mentions_view(request):
-    return render(request, "core/legal_mentions.html")
+    return render(request, "core/mentions_legales.html")
 
 
 # ---------------------------
